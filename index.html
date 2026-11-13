@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Toolshed — Zohaib Hamdule</title>
+<meta name="description" content="Toolshed: a growing collection of questionably useful tools by Zohaib Hamdule.">
+<meta name="theme-color" content="#f6f4ef">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23234c44'/%3E%3Cpath d='M5 20H35M17.5 7V33M22.5 7V33M22.5 7L35 20M5 20L17.5 33' fill='none' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #f6f4ef;
+    --paper: #ffffff;
+    --ink: #1d1d1b;
+    --muted: #6d6a64;
+    --faint: #9a968e;
+    --rule: #dedad1;
+    --accent: #234c44;
+    --accent-soft: #e6eeeb;
+    --serif: "Source Serif 4", Georgia, serif;
+    --sans: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+    --body: "Atkinson Hyperlegible", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+    --wrap: 1080px;
+    --gutter: 24px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 17px/1.6 var(--sans);
+    overflow-x: hidden;
+  }
+  a { color: inherit; }
+  .wrap { width: min(var(--wrap), 100% - 2 * var(--gutter)); margin-inline: auto; }
+
+  /* ---------- header ---------- */
+  .top {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 22px 0;
+  }
+  .mark {
+    display: flex; align-items: center; gap: 12px; text-decoration: none;
+    font-family: var(--serif); font-weight: 600; font-size: 18px;
+  }
+  .mark span {
+    display: grid; place-items: center; width: 34px; height: 34px;
+    border: 1.5px solid var(--accent); color: var(--accent);
+  }
+  .mark svg {
+    width: 82%; height: 82%; fill: none; stroke: currentColor;
+    stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .top-link { font-weight: 600; font-size: 15px; color: var(--accent); text-decoration: none; }
+  .top-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ---------- intro ---------- */
+  .intro { padding: 56px 0 56px; border-bottom: 1px solid var(--rule); }
+  .intro h1 {
+    font-family: var(--serif); font-weight: 600;
+    font-size: clamp(38px, 7vw, 60px); line-height: 1.05; letter-spacing: -.01em;
+  }
+  .lede { margin-top: 16px; max-width: 560px; font-size: 19px; color: #3b3a36; }
+
+  /* ---------- grid ---------- */
+  .shed { padding: 56px 0 72px; font-family: var(--body); }
+  .grid {
+    list-style: none;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  }
+  .box {
+    position: relative; aspect-ratio: 1;
+    display: grid; place-items: center;
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 6px;
+    color: #cfcbc2; text-decoration: none;
+    transition: border-color .15s, transform .15s, box-shadow .15s;
+  }
+  .box .q {
+    font-family: var(--serif); font-weight: 500;
+    font-size: clamp(40px, 7vw, 68px); line-height: 1;
+  }
+  .box .n {
+    position: absolute; top: 10px; left: 12px;
+    font-size: 12px; color: var(--faint); font-variant-numeric: tabular-nums;
+  }
+  /* placeholder boxes */
+  .box.empty { background: transparent; border-style: dashed; }
+
+  /* live tool box */
+  a.tool {
+    display: flex; flex-direction: column; place-items: initial;
+    padding: 34px 14px 14px; color: var(--accent); border-color: #b9cfc8;
+  }
+  .tool .go {
+    position: absolute; top: 10px; right: 10px; width: 18px; height: 18px;
+    fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    transition: transform .15s;
+  }
+  .tool .art { flex: 1; min-height: 0; position: relative; }
+  .tool .art svg { position: absolute; inset: 4px 6%; width: 88%; height: calc(100% - 8px); overflow: visible; }
+  .tool .t { margin-top: 8px; font-size: 15.5px; font-weight: 700; line-height: 1.25; color: var(--ink); }
+  .tool .d { margin-top: 4px; font-size: 13px; line-height: 1.35; color: var(--muted); }
+
+  .art .pic { fill: var(--accent-soft); stroke: currentColor; stroke-width: 2; }
+  .art .sun { fill: #d9a441; }
+  .art .hill { fill: #9fbdb4; }
+  .art .glass { fill: var(--paper); }
+  .art .px rect { fill: #c9dcd6; }
+  .art .bit rect { fill: currentColor; }
+  .art .grid { fill: none; stroke: var(--paper); stroke-width: 1; }
+  .art .rim { fill: none; stroke: currentColor; stroke-width: 2.5; }
+  .art .handle { fill: none; stroke: currentColor; stroke-width: 5; stroke-linecap: round; }
+  .art .bits { font: 700 8.5px/1 ui-monospace, Consolas, monospace; fill: var(--faint); letter-spacing: .04em; }
+
+  a.tool:hover, a.tool:focus-visible {
+    border-color: var(--accent); background: var(--accent-soft);
+    transform: translateY(-2px); box-shadow: 0 10px 24px rgba(40,35,20,.08);
+  }
+  a.tool:hover .go, a.tool:focus-visible .go { transform: translate(2px, -2px); }
+  a.tool:hover .pic, a.tool:focus-visible .pic { fill: var(--paper); }
+  a.tool:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  footer { padding: 24px 0 40px; font: 13px/1.6 var(--body); color: var(--faint); border-top: 1px solid var(--rule); }
+  footer a { color: var(--muted); text-underline-offset: 3px; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 640px) {
+    :root { --gutter: 16px; }
+    body { font-size: 16px; }
+    .intro { padding: 36px 0 40px; }
+    .lede { font-size: 17px; }
+    .shed { padding: 36px 0 52px; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    a.tool { padding: 30px 10px 10px; }
+    .tool .t { font-size: 14px; }
+    .tool .d { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .box, .tool .go { transition: none; }
+    a.tool:hover, a.tool:focus-visible { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="https://zohaibhamdule.ffff0h.com"><span role="img" aria-label="ZH"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 20H35M17.5 7V33M22.5 7V33M22.5 7L35 20M5 20L17.5 33"/></svg></span><b>Zohaib Hamdule</b></a>
+    <a class="top-link" href="https://zohaibhamdule.ffff0h.com">Portfolio</a>
+  </header>
+
+  <section class="intro">
+    <h1>Toolshed</h1>
+    <p class="lede">A collection of questionably useful tools.</p>
+  </section>
+
+  <main class="shed">
+    <ul class="grid" aria-label="Tools">
+      <li><a class="box tool" href="https://steganography.ffff0h.com">
+        <span class="n">01</span>
+        <svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        <span class="art" aria-hidden="true">
+          <svg viewBox="0 0 120 92">
+            <defs><clipPath id="lens"><circle cx="82" cy="58" r="21"/></clipPath></defs>
+            <!-- the cover image -->
+            <rect class="pic" x="4" y="4" width="92" height="68" rx="4"/>
+            <circle class="sun" cx="26" cy="23" r="7"/>
+            <path class="hill" d="M5 64 L33 36 L50 52 L64 40 L95 66 V68 a3 3 0 0 1 -3 3 H8 a3 3 0 0 1 -3 -3 Z"/>
+            <!-- magnifier revealing hidden pixels -->
+            <circle class="glass" cx="82" cy="58" r="21"/>
+            <g clip-path="url(#lens)">
+              <g class="px">
+                <rect x="61" y="37" width="10" height="10"/><rect x="82" y="37" width="10" height="10"/>
+                <rect x="71" y="47" width="10" height="10"/><rect x="92" y="47" width="10" height="10"/>
+                <rect x="61" y="57" width="10" height="10"/><rect x="82" y="57" width="10" height="10"/>
+                <rect x="71" y="67" width="10" height="10"/><rect x="92" y="67" width="10" height="10"/>
+              </g>
+              <g class="bit">
+                <rect x="71" y="37" width="10" height="10"/><rect x="82" y="47" width="10" height="10"/>
+                <rect x="71" y="57" width="10" height="10"/><rect x="92" y="57" width="10" height="10"/>
+                <rect x="82" y="67" width="10" height="10"/>
+              </g>
+              <path class="grid" d="M61 47H103M61 57H103M61 67H103M71 37V79M82 37V79M92 37V79"/>
+            </g>
+            <circle class="rim" cx="82" cy="58" r="21"/>
+            <path class="handle" d="M97 73 L112 88"/>
+            <!-- hidden bits leaking out -->
+            <text class="bits" x="4" y="88">01001000 01101001</text>
+          </svg>
+        </span>
+        <span class="t">Image Steganography Suite</span>
+        <span class="d">Hide data inside pictures, and find what's already hidden.</span>
+      </a></li>
+      <li><div class="box empty" aria-label="Tool 02: coming soon"><span class="n">02</span><span class="q" aria-hidden="true">?</span></div></li>
+      <li><div class="box empty" aria-label="Tool 03: coming soon"><span class="n">03</span><span class="q" aria-hidden="true">?</span></div></li>
+      <li><div class="box empty" aria-label="Tool 04: coming soon"><span class="n">04</span><span class="q" aria-hidden="true">?</span></div></li>
+      <li><div class="box empty" aria-label="Tool 05: coming soon"><span class="n">05</span><span class="q" aria-hidden="true">?</span></div></li>
+      <li><div class="box empty" aria-label="Tool 06: coming soon"><span class="n">06</span><span class="q" aria-hidden="true">?</span></div></li>
+      <li><div class="box empty" aria-label="Tool 07: coming soon"><span class="n">07</span><span class="q" aria-hidden="true">?</span></div></li>
+      <li><div class="box empty" aria-label="Tool 08: coming soon"><span class="n">08</span><span class="q" aria-hidden="true">?</span></div></li>
+      <li><div class="box empty" aria-label="Tool 09: coming soon"><span class="n">09</span><span class="q" aria-hidden="true">?</span></div></li>
+      <li><div class="box empty" aria-label="Tool 10: coming soon"><span class="n">10</span><span class="q" aria-hidden="true">?</span></div></li>
+      <li><div class="box empty" aria-label="Tool 11: coming soon"><span class="n">11</span><span class="q" aria-hidden="true">?</span></div></li>
+      <li><div class="box empty" aria-label="Tool 12: coming soon"><span class="n">12</span><span class="q" aria-hidden="true">?</span></div></li>
+      <li><div class="box empty" aria-label="Tool 13: coming soon"><span class="n">13</span><span class="q" aria-hidden="true">?</span></div></li>
+      <li><div class="box empty" aria-label="Tool 14: coming soon"><span class="n">14</span><span class="q" aria-hidden="true">?</span></div></li>
+      <li><div class="box empty" aria-label="Tool 15: coming soon"><span class="n">15</span><span class="q" aria-hidden="true">?</span></div></li>
+      <li><div class="box empty" aria-label="Tool 16: coming soon"><span class="n">16</span><span class="q" aria-hidden="true">?</span></div></li>
+    </ul>
+  </main>
+
+  <footer>
+    <p>© 2026 Zohaib Hamdule · <a href="https://zohaibhamdule.ffff0h.com">zohaibhamdule.ffff0h.com</a></p>
+  </footer>
+</div>
+
+</body>
+</html>
