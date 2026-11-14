@@ -68,7 +68,36 @@ Then update the policy:
 
 If every answer is "no", the policy needs no text changes. Still re-read it to confirm nothing it says has become false.
 
-## 4. Before pushing
+## 4. Ads (AdSense and ads.txt)
+
+**ads.txt is a one-time setup. You do not need to change it for each new tool.**
+
+Ad networks only read `ads.txt` from the **root domain**: `https://ffff0h.com/ads.txt`. A copy on a tool's subdomain (e.g. `newtool.ffff0h.com/ads.txt`) is not enough on its own. Because of how the domain is set up:
+
+- `ffff0h.com` redirects to Toolshed through a Cloudflare redirect rule that **keeps the path**, so `ffff0h.com/ads.txt` serves [ads.txt](ads.txt) from this repo.
+- That one file covers every `*.ffff0h.com` tool, because they all use the same AdSense publisher ID.
+
+It currently contains:
+```
+google.com, pub-4816264619829761, DIRECT, f08c47fec0942fa0
+```
+
+For each new tool:
+- Add the AdSense `<script>` (same `ca-pub-4816264619829761` client) to the `<head>` of every page of the tool.
+- No new AdSense site is needed. The tool runs on a subdomain of `ffff0h.com`, and that domain is already registered in AdSense.
+- Leave `ads.txt` alone.
+
+Only edit [ads.txt](ads.txt) if:
+- you add a **different ad network** or a second publisher account (add its line), or
+- AdSense shows an "ads.txt" warning with a different line.
+
+Don't break the redirect: if the Cloudflare rule for `ffff0h.com` is ever changed, `https://ffff0h.com/ads.txt` must still return this file. Check with:
+```
+curl -sIL https://ffff0h.com/ads.txt
+```
+If a tool starts showing ads, it is already covered by the "Advertising and cookies" section of the privacy policy. Step 3 still applies if it adds any *other* ad or tracking service.
+
+## 5. Before pushing
 
 - Check the grid at desktop and phone widths (2 columns under 640px).
 - Click through the new card to the live subdomain over `https://`.
